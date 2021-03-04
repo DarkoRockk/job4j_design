@@ -14,22 +14,18 @@ public class MemStore<T extends Base> implements Store<T> {
 
     @Override
     public boolean replace(String id, T model) {
-        for (int i = 0; i < mem.size(); i++) {
-            if (mem.get(i).getId().equals(id)) {
-                mem.set(i, model);
-                return true;
-            }
+        if (findIndex(id) >= 0) {
+            mem.set(findIndex(id), model);
+            return true;
         }
         return false;
     }
 
     @Override
     public boolean delete(String id) {
-        for (int i = 0; i < mem.size(); i++) {
-            if (mem.get(i).getId().equals(id)) {
-                mem.remove(i);
-                return true;
-            }
+        if (findIndex(id) >= 0) {
+            mem.remove(findIndex(id));
+            return true;
         }
         return false;
     }
@@ -40,5 +36,14 @@ public class MemStore<T extends Base> implements Store<T> {
                 .filter(t -> t.getId().equals(id))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public int findIndex(String id) {
+        for (int i = 0; i < mem.size(); i++) {
+            if (mem.get(i).getId().equals(id)) {
+                return i;
+            }
+        }
+        return -1;
     }
 }
