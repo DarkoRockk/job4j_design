@@ -7,7 +7,6 @@ import java.util.Objects;
 public class SimpleArray<T> implements Iterable<T> {
     private Object[] data;
     private int point = 0;
-    private int index = 0;
 
     public SimpleArray(int size) {
         this.data = new Object[size];
@@ -24,23 +23,23 @@ public class SimpleArray<T> implements Iterable<T> {
 
     public void remove(int index) {
         Objects.checkIndex(index, point);
-        for (int i = index; i < point; i++) {
-            data[i] = data[i + 1];
-            data[point] = null;
-            point--;
-        }
+        System.arraycopy(data, index + 1, data, index, data.length - index);
     }
 
     public T get(int index) {
+        Objects.checkIndex(index, point);
         return (T) data[index];
     }
 
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
+
+            int index = 0;
+
             @Override
             public boolean hasNext() {
-                return index <= point && data[index] != null;
+                return index <= point;
             }
 
             @Override
