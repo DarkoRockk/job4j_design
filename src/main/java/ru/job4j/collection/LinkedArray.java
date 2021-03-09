@@ -17,7 +17,7 @@ public class LinkedArray<T> implements Iterable<T> {
             first = new Node<T>(null, model, null);
             last = first;
         } else {
-            last = new Node<T>(first, model, null);
+            last = new Node<T>(null, model, null);
         }
         size++;
         modCount++;
@@ -41,6 +41,8 @@ public class LinkedArray<T> implements Iterable<T> {
 
             int index = size - 1;
             int expectedModCount = modCount;
+            Node<T> target = last;
+
 
             @Override
             public boolean hasNext() {
@@ -55,7 +57,10 @@ public class LinkedArray<T> implements Iterable<T> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return get(index--);
+                Node<T> rsl = target;
+                target = target.prev;
+                index--;
+                return rsl.item;
             }
         };
     }
