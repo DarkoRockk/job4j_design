@@ -14,8 +14,9 @@ public class MemStore<T extends Base> implements Store<T> {
 
     @Override
     public boolean replace(String id, T model) {
-        if (findIndex(id) >= 0) {
-            mem.set(findIndex(id), model);
+        int index = findIndex(id);
+        if (index >= 0) {
+            mem.set(index, model);
             return true;
         }
         return false;
@@ -23,8 +24,9 @@ public class MemStore<T extends Base> implements Store<T> {
 
     @Override
     public boolean delete(String id) {
-        if (findIndex(id) >= 0) {
-            mem.remove(findIndex(id));
+        int index = findIndex(id);
+        if (index >= 0) {
+            mem.remove(index);
             return true;
         }
         return false;
