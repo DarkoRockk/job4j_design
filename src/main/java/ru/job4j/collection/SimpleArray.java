@@ -19,14 +19,13 @@ public class SimpleArray<T> implements Iterable<T> {
     public void checkLength(Object[] data) {
         if (point == data.length) {
             Object[] data1 = new Object[point * 2];
-            System.arraycopy(data, 0, data1, 0, data.length - 1);
+            System.arraycopy(data, 0, data1, 0, data.length);
             this.data = data1;
         }
     }
 
     public T get(int index) {
         Objects.checkIndex(index, point);
-        modCount++;
         return (T) data[index];
     }
 
