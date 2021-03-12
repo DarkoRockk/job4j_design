@@ -23,6 +23,6 @@ public class SimpleSetTest {
         assertThat(array.contains("Вася"), is(true));
         assertThat(array.contains("Петя"), is(true));
         assertThat(array.contains(null), is(true));
-        assertThat(array.size(), is(2));
+        assertThat(array.size(), is(3));
     }
 }

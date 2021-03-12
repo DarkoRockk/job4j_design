@@ -10,39 +10,26 @@ public class SimpleSet<T> implements Iterable<T> {
     private int modCount = 0;
 
     public boolean add(T value) {
+        if (!contains(value)) {
+            list.add(value);
+            size++;
+            modCount++;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean contains(T value) {
         for (T el : list) {
             if (el.equals(value)) {
-                return false;
+                return true;
             }
         }
-        list.add(value);
-        size++;
-        modCount++;
-        return true;
+        return false;
     }
 
     @Override
     public Iterator<T> iterator() {
-        return new Iterator<T>() {
-
-            int index = 0;
-            int expectedModCount = modCount;
-
-            @Override
-            public boolean hasNext() {
-                return index < size;
-            }
-
-            @Override
-            public T next() {
-                if (expectedModCount != modCount) {
-                    throw new ConcurrentModificationException();
-                }
-                if (!hasNext()) {
-                    throw new NoSuchElementException();
-                }
-                return (T) list.get(index++);
-            }
-        };
+        return list.iterator();
     }
 }
