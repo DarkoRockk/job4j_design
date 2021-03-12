@@ -7,9 +7,9 @@ import java.util.Objects;
 
 public class LinkedArray<T> implements Iterable<T> {
 
-    transient int size = 0;
-    transient Node<T> first;
-    transient Node<T> last;
+    private int size = 0;
+    private Node<T> first;
+    private Node<T> last;
     private int modCount = 0;
 
     public void add(T model) {
@@ -17,7 +17,9 @@ public class LinkedArray<T> implements Iterable<T> {
             first = new Node<T>(null, model, null);
             last = first;
         } else {
-            last = new Node<T>(null, model, null);
+            Node<T> newNode = new Node<>(last, model, null);
+            last.next = newNode;
+            last = newNode;
         }
         size++;
         modCount++;
@@ -31,7 +33,6 @@ public class LinkedArray<T> implements Iterable<T> {
             rsl = rsl.prev;
             point--;
         }
-        modCount++;
         return rsl.item;
     }
 
@@ -39,14 +40,14 @@ public class LinkedArray<T> implements Iterable<T> {
     public Iterator<T> iterator() {
         return new Iterator<T>() {
 
-            int index = size - 1;
+            int index = 0;
             int expectedModCount = modCount;
-            Node<T> target = last;
+            Node<T> target = first;
 
 
             @Override
             public boolean hasNext() {
-                return index >= 0;
+                return index < size;
             }
 
             @Override
@@ -58,8 +59,8 @@ public class LinkedArray<T> implements Iterable<T> {
                     throw new NoSuchElementException();
                 }
                 Node<T> rsl = target;
-                target = target.prev;
-                index--;
+                target = target.next;
+                index++;
                 return rsl.item;
             }
         };
