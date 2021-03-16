@@ -45,7 +45,12 @@ public class SimpleMap<K, V> implements Iterable<SimpleMap.Node> {
     public void checkLength(Node[] table, int i) {
         while (i >= table.length) {
             Node[] table1 = new Node[table.length * 2];
-            System.arraycopy(table, 0, table1, 0, table.length);
+            for (Node nod : table) {
+                if (nod != null) {
+                    int index = hash(nod.hash) & (table1.length - 1);
+                    table1[index] = nod;
+                }
+            }
             this.table = table1;
         }
     }
@@ -53,6 +58,7 @@ public class SimpleMap<K, V> implements Iterable<SimpleMap.Node> {
     public int index(K key) {
         return hash(key) & (table.length - 1);
     }
+
 
     @SuppressWarnings("checkstyle:InnerAssignment")
     static final int hash(Object key) {
