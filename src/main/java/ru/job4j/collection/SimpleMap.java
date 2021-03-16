@@ -23,19 +23,23 @@ public class SimpleMap<K, V> implements Iterable<SimpleMap.Node> {
 
     public V get(K key) {
         int i = index(key);
-        if (table[i] == null) {
-            throw new NoSuchElementException();
+        if (table[i] != null) {
+            if (key.equals(table[i].key)) {
+                return (V) table[i].value;
+            }
         }
-        return (V) table[i].value;
+        return null;
     }
 
     public boolean delete(K key) {
         int i = index(key);
-        if (table[i] == null) {
-            return false;
+        if (table[i] != null) {
+            if (key.equals(table[i].key)) {
+                table[i] = null;
+                return true;
+            }
         }
-        table[i] = null;
-        return true;
+        return false;
     }
 
     public void checkLength(Node[] table, int i) {
@@ -47,9 +51,10 @@ public class SimpleMap<K, V> implements Iterable<SimpleMap.Node> {
     }
 
     public int index(K key) {
-        return hash(key) & (table.length);
+        return hash(key) & (table.length - 1);
     }
 
+    @SuppressWarnings("checkstyle:InnerAssignment")
     static final int hash(Object key) {
         int h;
         return (key == null) ? 0 : (h = key.hashCode()) ^ (h >>> 16);
