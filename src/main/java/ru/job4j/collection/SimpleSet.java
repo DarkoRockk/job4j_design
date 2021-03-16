@@ -3,6 +3,7 @@ package ru.job4j.collection;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public class SimpleSet<T> implements Iterable<T> {
     private SimpleArray<T> list = new SimpleArray<>();
@@ -20,8 +21,9 @@ public class SimpleSet<T> implements Iterable<T> {
     }
 
     public boolean contains(T value) {
+
         for (T el : list) {
-            if (el.equals(value)) {
+            if (Objects.equals(el, value)) {
                 return true;
             }
         }
