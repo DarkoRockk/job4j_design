@@ -43,7 +43,7 @@ public class SimpleMap<K, V> implements Iterable<SimpleMap.Node> {
     }
 
     public void checkLength(Node[] table, int i) {
-        while (i >= table.length) {
+        if (i >= table.length) {
             Node[] table1 = new Node[table.length * 2];
             for (Node nod : table) {
                 if (nod != null) {
