@@ -7,7 +7,7 @@ import java.util.Queue;
 public class Tree<E> implements SimpleTree<E> {
     private final Node<E> root;
 
-    Tree(final E root) {
+    public Tree(final E root) {
         this.root = new Node<>(root);
     }
 
@@ -15,8 +15,10 @@ public class Tree<E> implements SimpleTree<E> {
     public boolean add(E parent, E child) {
         Optional<Node<E>> root = findBy(parent);
         if (root.isPresent()) {
-            root.get().children.add(new Node(child));
-            return true;
+            if (!root.get().children.contains(child)) {
+                root.get().children.add(new Node(child));
+                return true;
+            }
         }
         return false;
     }
