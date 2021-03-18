@@ -5,13 +5,14 @@ import java.util.*;
 public class SimpleMap<K, V> implements Iterable<SimpleMap.Node> {
 
     private Node[] table = new Node[16];
+    private final double LOAD_FACTOR = 0.75;
     private int size = 0;
     private int modCount = 0;
 
     public boolean insert(K key, V value) {
         Node<K, V> newNode = new Node<>(key.hashCode(), key, value);
+        checkLength(table);
         int i = index(key);
-        checkLength(table, i);
         if (table[i] == null) {
             table[i] = newNode;
             size++;
@@ -24,7 +25,7 @@ public class SimpleMap<K, V> implements Iterable<SimpleMap.Node> {
     public V get(K key) {
         int i = index(key);
         if (table[i] != null) {
-            if (key.equals(table[i].key)) {
+            if (Objects.equals(key, table[i].key)) {
                 return (V) table[i].value;
             }
         }
@@ -34,7 +35,7 @@ public class SimpleMap<K, V> implements Iterable<SimpleMap.Node> {
     public boolean delete(K key) {
         int i = index(key);
         if (table[i] != null) {
-            if (key.equals(table[i].key)) {
+            if (Objects.equals(key, table[i].key)) {
                 table[i] = null;
                 return true;
             }
@@ -42,8 +43,8 @@ public class SimpleMap<K, V> implements Iterable<SimpleMap.Node> {
         return false;
     }
 
-    public void checkLength(Node[] table, int i) {
-        if (i >= table.length) {
+    public void checkLength(Node[] table) {
+        if (size >= table.length * LOAD_FACTOR) {
             Node[] table1 = new Node[table.length * 2];
             for (Node nod : table) {
                 if (nod != null) {
