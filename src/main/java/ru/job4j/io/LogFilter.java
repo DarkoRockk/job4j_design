@@ -13,7 +13,7 @@ public class LogFilter {
                 String text = in.readLine();
                 String[] textArr = text.split(" ");
                 if (textArr[textArr.length - 2].equals("404")) {
-                    rsl.add(text + System.lineSeparator());
+                    rsl.add(text);
                 }
             }
         } catch (Exception e) {
@@ -28,7 +28,7 @@ public class LogFilter {
                         new FileOutputStream(file)
                 ))) {
             for (String str : log) {
-                out.write(str);
+                out.println(str);
             }
         } catch (Exception e) {
             e.printStackTrace();
