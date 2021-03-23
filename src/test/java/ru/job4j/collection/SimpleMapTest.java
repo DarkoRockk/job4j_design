@@ -32,7 +32,7 @@ public class SimpleMapTest {
         map.insert("Alien", 2000);
         boolean rsl1 = map.delete("Alien");
         boolean rsl2 = map.delete("Alien");
-        int rsl3 = map.get("Alien");
+        Integer rsl3 = map.get("Alien");
         assertThat(rsl1, is(true));
         assertThat(rsl2, is(false));
         assertNull(rsl3);
