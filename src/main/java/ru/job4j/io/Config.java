@@ -2,6 +2,7 @@ package ru.job4j.io;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringJoiner;
@@ -20,14 +21,13 @@ public class Config {
                 String el = read.readLine();
                 if (!el.startsWith("#") && el.trim().length() > 0) {
                     String[] kv = el.split("=");
-                    if (kv.length == 2) {
-                        values.put(kv[0], kv[1]);
-                    } else {
+                    if (kv.length != 2) {
                         throw new IllegalArgumentException();
                     }
+                    values.put(kv[0], kv[1]);
                 }
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -48,6 +48,6 @@ public class Config {
     }
 
     public static void main(String[] args) {
-        System.out.println(new Config("/Users/darkorockk/IdeaProjects/job4j_design/add.properties"));
+        System.out.println(new Config("./add.properties"));
     }
 }

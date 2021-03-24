@@ -9,7 +9,7 @@ public class ConfigTest {
 
     @Test
     public void whenPairWithoutComment() {
-        String path = "/Users/darkorockk/IdeaProjects/job4j_design/without_comments.properties";
+        String path = "./without_comments.properties";
         Config config = new Config(path);
         config.load();
         assertThat(
@@ -20,7 +20,7 @@ public class ConfigTest {
 
     @Test
     public void whenPairWithComment() {
-        String path = "/Users/darkorockk/IdeaProjects/job4j_design/add.properties";
+        String path = "./add.properties";
         Config config = new Config(path);
         config.load();
         assertThat(
@@ -31,7 +31,7 @@ public class ConfigTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void whenIllegalArgument() {
-        String path = "/Users/darkorockk/IdeaProjects/job4j_design/illegal.properties";
+        String path = "./illegal.properties";
         Config config = new Config(path);
         config.load();
     }
