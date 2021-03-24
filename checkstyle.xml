@@ -25,7 +25,6 @@
         <module name="ConstantName"/>
         <!--<module name="LocalFinalVariableName"/>-->
         <module name="LocalVariableName"/>
-        <module name="MemberName"/>
         <module name="MethodName"/>
         <module name="PackageName">
             <property name="format" value="^[a-z]+(\.[a-z0-9]*)*$"/>
@@ -71,7 +70,6 @@
         <module name="EqualsHashCode"/>
         <!--<module name="HiddenField"/>-->
         <module name="IllegalInstantiation"/>
-        <module name="InnerAssignment"/>
         <!--<module name="MagicNumber"/>-->
         <module name="MissingSwitchDefault"/>
         <module name="SimplifyBooleanExpression"/>
