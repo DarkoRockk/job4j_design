@@ -77,7 +77,7 @@ public class SimpleMap<K, V> implements Iterable<SimpleMap.Node> {
 
             @Override
             public boolean hasNext() {
-                return index < size;
+                return index < table.length;
             }
 
             @Override
