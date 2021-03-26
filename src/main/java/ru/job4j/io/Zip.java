@@ -9,17 +9,18 @@ import java.util.zip.ZipOutputStream;
 public class Zip {
 
     public void packFiles(List<Path> sources, Path target) {
-        for (Path source : sources) {
             try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target.toString())))) {
-                zip.putNextEntry(new ZipEntry(source.toString()));
-                try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(source.toString()))) {
-                    zip.write(out.readAllBytes());
-                    zip.closeEntry();
+                for (Path source : sources) {
+                    zip.putNextEntry(new ZipEntry(source.toString()));
+                    try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(source.toString()))) {
+                        zip.write(out.readAllBytes());
+                    }
                 }
             } catch (Exception e) {
                 e.printStackTrace();
+
             }
-        }
+
     }
 
     public void packSingleFile(File source, File target) {
@@ -37,7 +38,7 @@ public class Zip {
         ArgsName names = ArgsName.of(args);
 
         List<Path> paths = Search.search(Path.of(names.get("d")),
-                p -> p.toFile().getName().endsWith(names.get("e")));
+                p -> !p.toFile().getName().endsWith(names.get("e")));
 
         Path out = Path.of(names.get("o"));
 
