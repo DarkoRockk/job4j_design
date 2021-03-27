@@ -11,6 +11,8 @@ public class ConsoleChat {
     private static final String OUT = "закончить";
     private static final String STOP = "стоп";
     private static final String CONTINUE = "продолжить";
+    private List<String> answers = new ArrayList<>();
+    private List<String> log = new ArrayList<>();
 
     public ConsoleChat(String path, String botAnswers) {
         this.path = path;
@@ -22,22 +24,24 @@ public class ConsoleChat {
              PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(path,
                      Charset.forName("UTF-8"))))) {
             String phrase = reader.readLine();
-            out.println(phrase);
             boolean isWork = true;
             while (!phrase.equals(OUT)) {
-                out.println(phrase);
+                log.add(phrase);
                 if (phrase.equals(STOP)) {
                     isWork = false;
                 }
                 if (isWork) {
                     String answer = getAnswer();
                     System.out.println(answer);
-                    out.println(answer);
+                    log.add(answer);
                 }
                 if (phrase.equals(CONTINUE)) {
                     isWork = true;
                 }
                 phrase = reader.readLine();
+            }
+            for (String el : log) {
+                out.println(el);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -46,13 +50,14 @@ public class ConsoleChat {
     }
 
     public String getAnswer() {
-        List<String> answers = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(botAnswers))) {
-            while (reader.ready()) {
-                answers.add(reader.readLine());
+        if (answers.size() == 0) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(botAnswers))) {
+                while (reader.ready()) {
+                    answers.add(reader.readLine());
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        } catch (Exception e) {
-            e.printStackTrace();
         }
         int index = (int) (Math.random() * answers.size());
         return answers.get(index);
