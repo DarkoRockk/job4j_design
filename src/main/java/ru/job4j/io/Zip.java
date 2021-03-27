@@ -35,6 +35,9 @@ public class Zip {
     }
 
     public static void main(String[] args) throws IOException {
+        if (args.length != 3) {
+            return;
+        }
         ArgsName names = ArgsName.of(args);
 
         List<Path> paths = Search.search(Path.of(names.get("d")),
