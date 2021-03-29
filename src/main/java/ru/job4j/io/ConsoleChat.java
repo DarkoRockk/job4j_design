@@ -51,16 +51,20 @@ public class ConsoleChat {
 
     public String getAnswer() {
         if (answers.size() == 0) {
-            try (BufferedReader reader = new BufferedReader(new FileReader(botAnswers))) {
-                while (reader.ready()) {
-                    answers.add(reader.readLine());
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            takeAnswers(botAnswers);
         }
         int index = (int) (Math.random() * answers.size());
         return answers.get(index);
+    }
+
+    public void takeAnswers(String path) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+            while (reader.ready()) {
+                answers.add(reader.readLine());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static void main(String[] args) {
