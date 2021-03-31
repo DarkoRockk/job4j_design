@@ -20,9 +20,7 @@ public class ConsoleChat {
     }
 
     public void run() {
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-             PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(path,
-                     Charset.forName("UTF-8"))))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             String phrase = reader.readLine();
             boolean isWork = true;
             while (!phrase.equals(OUT)) {
@@ -40,9 +38,12 @@ public class ConsoleChat {
                 }
                 phrase = reader.readLine();
             }
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(path,
+                    Charset.forName("UTF-8"))));
             for (String el : log) {
                 out.println(el);
             }
+            out.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
