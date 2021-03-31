@@ -9,8 +9,12 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 public class UserMail {
+
     private Map<String, List<String>> users = new HashMap<>();
 
+    public Map<String, List<String>> getUsers() {
+        return users;
+    }
 
     public UserMail(String path) {
         try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
@@ -28,18 +32,23 @@ public class UserMail {
         }
     }
 
-    public void merge() {
-        Map<String, List<String>> mail = new HashMap<>();
+    public Map<String, List<String>> reverseMap(Map<String, List<String>> map) {
         Map<String, List<String>> rsl = new HashMap<>();
-        for (Map.Entry<String, List<String>> pair : users.entrySet()) {
+        for (Map.Entry<String, List<String>> pair : map.entrySet()) {
             for (String el : pair.getValue()) {
-                if (!mail.containsKey(el)) {
-                    mail.get(el).add(pair.getKey());
+                if (!rsl.containsKey(el)) {
+                    rsl.get(el).add(pair.getKey());
                 } else {
-                    mail.put(el, new ArrayList<>(List.of(pair.getKey())));
+                    rsl.put(el, new ArrayList<>(List.of(pair.getKey())));
                 }
             }
         }
+        return rsl;
+    }
+
+    public void merge() {
+        Map<String, List<String>> mail = reverseMap(users);
+        Map<String, List<String>> rsl = new HashMap<>();
         for (Map.Entry<String, List<String>> pair : mail.entrySet()) {
             if (pair.getValue().size() > 1) {
                 String key = pair.getValue().get(0);
@@ -62,7 +71,11 @@ public class UserMail {
 
     public static void main(String[] args) {
         UserMail mails = new UserMail("./users.txt");
-        mails.merge();
-
+//        for (Map.Entry pair : mails.getUsers().entrySet()) {
+//            System.out.println(pair.getKey() + ":" + pair.getValue());
+//        }
+        for (Map.Entry pair : mails.reverseMap(mails.getUsers()).entrySet()) {
+            System.out.println(pair.getKey() + ":" + pair.getValue());
+        }
     }
 }
