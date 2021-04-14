@@ -20,10 +20,11 @@ public class EchoServer {
                              new InputStreamReader(socket.getInputStream()))) {
                     String str;
                     String response = "";
+                    out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
                     while (!(str = in.readLine()).isEmpty()) {
                         if (str.contains("GET /?msg=Exit")) {
-                            server.close();
                             out.write("Server closed successfully\r\n".getBytes());
+                            server.close();
                             return;
                         } else if (str.contains("GET /?msg=Hello")) {
                             response = "Hello";
@@ -32,7 +33,6 @@ public class EchoServer {
                         }
                         System.out.println(str);
                     }
-                    out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
                     out.write((response + "\r\n\r\n").getBytes());
                 }
             }
