@@ -38,16 +38,22 @@ public class ConsoleChat {
                 }
                 phrase = reader.readLine();
             }
-            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(path,
-                    Charset.forName("UTF-8"))));
-            for (String el : log) {
-                out.println(el);
-            }
-            out.close();
+            writeLog(log);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
+
+    public void writeLog(List<String> log) {
+        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(path,
+                Charset.forName("UTF-8"))));) {
+            for (String el : log) {
+                out.println(el);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public String getAnswer() {
