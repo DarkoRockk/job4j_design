@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<animal sex="true" age="7" name="Jack">
+    <vaccine name="Nobivak" version="3.5"/>
+    <statuses>
+        <status>Russian Junior Champion</status>
+        <status>Russian Champion</status>
+    </statuses>
+</animal>
