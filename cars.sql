@@ -48,3 +48,6 @@ join body b on body_id = b.id
 join engine e on engine_id = e.id
 join transmission t on transmission_id = t.id;
 
+select * from body b left join car c on c.body_id = b.id where c.name is null;
+select * from engine e left join car c on c.engine_id = e.id where c.name is null;
+select * from transmission t left join car c on c.transmission_id = t.id where c.name is null;
