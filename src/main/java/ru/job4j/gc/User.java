@@ -19,9 +19,12 @@ public class User {
     }
 
     public static void main(String[] args) {
-        for (int i = 0; i < 100; i++) {
+        System.out.println("Start");
+        for (int i = 0; i < 1000; i++) {
             new User();
         }
+        System.gc();
+        System.out.println("End");
     }
 
 }
