@@ -14,19 +14,6 @@ public class DirFileCache extends AbstractCache<String, String> {
     }
 
     @Override
-    public String get(String key) {
-        if (cache.get(key) == null) {
-            super.put(key, load(key));
-        }
-        return super.get(key);
-    }
-
-    @Override
-    public void put(String key, String value) {
-        super.put(key, value);
-    }
-
-    @Override
     protected String load(String key) {
         StringBuilder sb = new StringBuilder();
         try (BufferedReader reader = new BufferedReader(new FileReader(key))) {
