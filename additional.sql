@@ -12,7 +12,7 @@ create table user_meeting (
 	id serial primary key,
 	user_id int references users(id),
 	meeting_id int references meetings(id),
-	status boolean
+	status varchar(255)
 );
 
 insert into users(name) values ('User1');
@@ -28,15 +28,26 @@ insert into meetings(name) values ('Meet4');
 insert into meetings(name) values ('Meet5');
 insert into meetings(name) values ('Meet6');
 
-insert into user_meeting(user_id, meeting_id, status) values (1, 1, true);
-insert into user_meeting(user_id, meeting_id, status) values (1, 2, false);
-insert into user_meeting(user_id, meeting_id, status) values (2, 3, true);
-insert into user_meeting(user_id, meeting_id, status) values (2, 4, true);
-insert into user_meeting(user_id, meeting_id, status) values (3, 1, false);
-insert into user_meeting(user_id, meeting_id, status) values (3, 4, true);
-insert into user_meeting(user_id, meeting_id, status) values (4, 5, true);
-insert into user_meeting(user_id, meeting_id, status) values (4, 2, true);
-insert into user_meeting(user_id, meeting_id, status) values (5, 3, false);
-insert into user_meeting(user_id, meeting_id, status) values (5, 5, false);
-insert into user_meeting(user_id, meeting_id, status) values (3, 5, true);
-insert into user_meeting(user_id, meeting_id, status) values (4, 1, false);
+insert into user_meeting(user_id, meeting_id, status) values (1, 1, 'pending');
+insert into user_meeting(user_id, meeting_id, status) values (1, 2, 'refused');
+insert into user_meeting(user_id, meeting_id, status) values (2, 3, 'accepted');
+insert into user_meeting(user_id, meeting_id, status) values (2, 4, 'accepted');
+insert into user_meeting(user_id, meeting_id, status) values (3, 1, 'pending');
+insert into user_meeting(user_id, meeting_id, status) values (3, 4, 'accepted');
+insert into user_meeting(user_id, meeting_id, status) values (4, 5, 'accepted');
+insert into user_meeting(user_id, meeting_id, status) values (4, 2, 'accepted');
+insert into user_meeting(user_id, meeting_id, status) values (5, 3, 'accepted');
+insert into user_meeting(user_id, meeting_id, status) values (5, 5, 'refused');
+insert into user_meeting(user_id, meeting_id, status) values (3, 5, 'accepted');
+insert into user_meeting(user_id, meeting_id, status) values (4, 1, 'pending');
+
+select m.name, count(um.status) from meetings m
+join user_meeting um on m.id = um.meeting_id
+where um.status = 'accepted'
+group by m.name;
+
+select m.name, count(um.status) from meetings m
+left join user_meeting um on m.id = um.meeting_id
+group by m.name
+having count(um.status) = 0;
+
