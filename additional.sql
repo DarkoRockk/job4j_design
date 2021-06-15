@@ -49,5 +49,10 @@ group by m.name;
 select m.name, count(um.status) from meetings m
 left join user_meeting um on m.id = um.meeting_id
 group by m.name
-having count(um.status) = 0;
+having count(um.status) = 0 or
+       count(um.status) = (
+        select count(*) from meetings join user_meeting on meetings.id =
+        user_meeting.meeting_id where meetings.name = m.name
+        and user_meeting.status = 'refused'
+        );
 
