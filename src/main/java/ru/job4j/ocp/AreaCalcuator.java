@@ -1,11 +1,12 @@
 package ru.job4j.ocp;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AreaCalcuator extends Calculator<Double> {
-    private final List<Figure> figures;
+    private final ArrayList<Figure> figures;
 
-    public AreaCalcuator(List<Figure> figures) {
+    public AreaCalcuator(ArrayList<Figure> figures) {
         this.figures = figures;
     }
 
