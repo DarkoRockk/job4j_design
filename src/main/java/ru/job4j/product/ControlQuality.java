@@ -1,19 +1,20 @@
 package ru.job4j.product;
 
-public class ControlQuality implements Sorter {
+import java.util.List;
 
-    private Warehouse warehouse;
-    private Shop shop;
-    private Trash trash;
+public class ControlQuality {
 
-    public ControlQuality(Warehouse warehouse, Shop shop, Trash trash) {
-        this.warehouse = warehouse;
-        this.shop = shop;
-        this.trash = trash;
+    private List<Storage> list;
+
+    public ControlQuality(List<Storage> list) {
+        this.list = list;
     }
 
     public void sort(Food food) {
-        // if food.....
-        // warehouse or shop or trash.add(food)....
+        for(Storage store : list) {
+            if(store.accept(food)) {
+                store.add(food);
+            }
+        }
     }
 }

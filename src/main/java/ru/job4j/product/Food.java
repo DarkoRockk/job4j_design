@@ -11,7 +11,7 @@ public class Food {
     protected float price;
     protected int discount;
 
-    public Food(String name, Calendar expiryDate, Calendar createDate, float price) {
+    public Food(String name, Calendar createDate, Calendar expiryDate, float price) {
         this.name = name;
         this.expiryDate = expiryDate;
         this.createDate = createDate;
@@ -73,5 +73,16 @@ public class Food {
     @Override
     public int hashCode() {
         return Objects.hash(name, expiryDate, createDate, price, discount);
+    }
+
+    @Override
+    public String toString() {
+        return "Food{" +
+                "name='" + name + '\'' +
+                ", expiryDate=" + expiryDate.getTime() +
+                ", createDate=" + createDate.getTime() +
+                ", price=" + price +
+                ", discount=" + discount +
+                '}';
     }
 }

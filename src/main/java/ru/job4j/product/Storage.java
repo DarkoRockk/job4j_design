@@ -1,17 +1,23 @@
 package ru.job4j.product;
 
-import java.util.ArrayList;
-import java.util.List;
 
-public class Storage {
+import java.util.Calendar;
 
-    private List<Food> list = new ArrayList<>();
+public interface Storage {
 
-    public void add(Food food) {
-        this.list.add(food);
-    }
+    boolean accept(Food food);
 
-    public List<Food> getProducts() {
-        return this.list;
-    }
+    void add (Food food);
+
+    void printList();
+
+    static double getIndex(Food food) {
+        long create = food.getCreateDate().getTimeInMillis();
+        long expired = food.getExpiryDate().getTimeInMillis();
+        long now = Calendar.getInstance().getTimeInMillis();
+        long fromStart = expired - create;
+        long fromToday = now - create;
+        return (double) fromToday / (double) fromStart;
+    };
+
 }
