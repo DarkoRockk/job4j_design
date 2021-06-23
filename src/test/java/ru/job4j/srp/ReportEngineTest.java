@@ -2,12 +2,16 @@ package ru.job4j.srp;
 
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.is;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.junit.Test;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class ReportEngineTest {
 
@@ -91,19 +95,20 @@ public class ReportEngineTest {
 
     }
 
-//    @Test
-//    public void ifJSON() throws JAXBException, IOException {
-//        MemStore store = new MemStore();
-//        Calendar now = Calendar.getInstance();
-//        Employee worker = new Employee("Ivan", now, now, 100);
-//        store.add(worker);
-//        Report engine = new ReportJSON(store);
-//        System.out.println(engine.generate(em -> true));
-//        StringBuilder expect = new StringBuilder()
-//                .append("{\"name\":\"").append(worker.getName()).append("\",");
-//        System.out.println(expect.toString());
-//        assertThat(engine.generate(em -> true), is(expect));
-//    }
+    @Test
+    public void ifJSON() throws JAXBException, IOException {
+        MemStore store = new MemStore();
+        Calendar now = Calendar.getInstance();
+        Employee worker = new Employee("Ivan", now, now, 100);
+        store.add(worker);
+        Report engine = new ReportJSON(store);
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(Calendar.class, new CalendarAdapterJson());
+        builder.registerTypeAdapter(GregorianCalendar.class, new CalendarAdapterJson());
+        Gson gson = builder.create();
+        String expect = gson.toJson(worker);
+        assertThat(engine.generate(em -> true), is(expect));
+    }
 
     @Test
     public void ifXML() throws JAXBException, IOException {

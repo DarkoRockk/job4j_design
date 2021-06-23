@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.Serializable;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.function.Predicate;
 
 public class ReportJSON implements Report, Serializable {
@@ -15,20 +17,14 @@ public class ReportJSON implements Report, Serializable {
 
     @Override
     public String generate(Predicate<Employee> filter) {
-        Gson gson = new GsonBuilder().create();
+        GsonBuilder builder = new GsonBuilder();
+        builder.registerTypeAdapter(Calendar.class, new CalendarAdapterJson());
+        builder.registerTypeAdapter(GregorianCalendar.class, new CalendarAdapterJson());
+        Gson gson = builder.create();
         StringBuilder text = new StringBuilder();
         for (Employee employee : store.findBy(filter)) {
             String json = gson.toJson(employee);
-            String[] jtext = json.split(",");
-            for (String s : jtext) {
-                if (s.contains("\"month\"")) {
-                    String[] month = s.split(":");
-                    String rsl = month[0] + ":" + (Integer.parseInt(month[1]) + 1);
-                    text.append(rsl);
-                } else {
-                    text.append(s).append(",");
-                }
-            }
+            text.append(json);
         }
         return text.toString();
     }
