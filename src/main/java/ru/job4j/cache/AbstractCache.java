@@ -15,12 +15,14 @@ public abstract class AbstractCache<K, V> {
     }
 
     public V get(K key) {
-        V rsl = null;
+        V rsl;
         if (!cache.containsKey(key)) {
             put(key, load(key));
             rsl = cache.get(key).get();
         } else if (cache.get(key).get() == null) {
             put(key, load(key));
+            rsl = cache.get(key).get();
+        } else {
             rsl = cache.get(key).get();
         }
         return rsl;
