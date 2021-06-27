@@ -2,10 +2,15 @@ package ru.job4j.parking;
 
 import java.util.Objects;
 
-public class Car {
+public abstract class Car {
 
     private String model;
     private int size;
+
+    public Car(String model) {
+        this.model = model;
+        this.size = 1;
+    }
 
     public Car(String model, int size) {
         this.model = model;

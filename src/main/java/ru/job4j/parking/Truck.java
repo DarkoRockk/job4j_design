@@ -7,7 +7,7 @@ public class Truck extends Car implements CanPark {
     }
 
     @Override
-    public int[] findPlace(Parking parking, Car car) {
-        return new int[0];
+    public int size() {
+        return super.getSize();
     }
 }

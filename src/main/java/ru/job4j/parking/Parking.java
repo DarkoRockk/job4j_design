@@ -2,22 +2,32 @@ package ru.job4j.parking;
 
 public class Parking {
 
-    private Car[] parking;
+    private Car[] lightCars;
+    private Car[] heavyCars;
     private int passPlaces;
     private int truckPlaces;
 
     public Parking(int passPlaces, int truckPlaces) {
         this.passPlaces = passPlaces;
         this.truckPlaces = truckPlaces;
-        this.parking = new Car[passPlaces + truckPlaces];
+        this.lightCars = new Car[passPlaces];
+        this.heavyCars = new Car[truckPlaces];
     }
 
-    public Car[] getParking() {
-        return parking;
+    public Car[] getLightCars() {
+        return lightCars;
     }
 
-    public void setParking(Car[] parking) {
-        this.parking = parking;
+    public void setLightCars(Car[] lightCars) {
+        this.lightCars = lightCars;
+    }
+
+    public Car[] getHeavyCars() {
+        return heavyCars;
+    }
+
+    public void setHeavyCars(Car[] heavyCars) {
+        this.heavyCars = heavyCars;
     }
 
     public int getPassPlaces() {
@@ -34,5 +44,9 @@ public class Parking {
 
     public void setTruckPlaces(int truckPlaces) {
         this.truckPlaces = truckPlaces;
+    }
+
+    public void park (Car car) {
+
     }
 }
