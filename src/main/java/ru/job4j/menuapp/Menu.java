@@ -1,13 +1,25 @@
 package ru.job4j.menuapp;
 
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 
-public class Menu<T> {
+public class Menu<K, V> implements CRUD<K,V> {
 
-    private List<Node<T>> list = new LinkedList<>();
+    @Override
+    public boolean add(K parent, K node, V action) {
+        return false;
+    }
 
-    public void add(T element, String level) {}
+    @Override
+    public boolean remove(K node) {
+        return false;
+    }
 
+    @Override
+    public boolean update(K node, V action) {
+        return false;
+    }
+
+    @Override
+    public V get(K node) {
+        return null;
+    }
 }

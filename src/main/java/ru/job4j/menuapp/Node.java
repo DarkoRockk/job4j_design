@@ -1,8 +1,16 @@
 package ru.job4j.menuapp;
 
-public class Node<T> {
+public class Node<T> implements Action, Printable {
 
     T item;
-    int level;
-    Node<T> nextLevel;
+
+    @Override
+    public String name() {
+        return null;
+    }
+
+    @Override
+    public String unOrdered() {
+        return null;
+    }
 }
