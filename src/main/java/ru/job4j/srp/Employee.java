@@ -17,7 +17,7 @@ public class Employee {
     @XmlAttribute
     private double salary;
 
-    public Employee() { };
+    public Employee() { }
 
     public Employee(String name, Calendar hired, Calendar fired, double salary) {
         this.name = name;

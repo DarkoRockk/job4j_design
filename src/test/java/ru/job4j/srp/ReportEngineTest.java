@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 public class ReportEngineTest {
 
@@ -99,14 +100,17 @@ public class ReportEngineTest {
     public void ifJSON() throws JAXBException, IOException {
         MemStore store = new MemStore();
         Calendar now = Calendar.getInstance();
-        Employee worker = new Employee("Ivan", now, now, 100);
-        store.add(worker);
+        Employee worker1 = new Employee("Ivan", now, now, 100);
+        Employee worker2 = new Employee("Dima", now, now, 300);
+        Employees employees = new Employees(List.of(worker1, worker2));
+        store.add(worker1);
+        store.add(worker2);
         Report engine = new ReportJSON(store);
         GsonBuilder builder = new GsonBuilder();
         builder.registerTypeAdapter(Calendar.class, new CalendarAdapterJson());
         builder.registerTypeAdapter(GregorianCalendar.class, new CalendarAdapterJson());
         Gson gson = builder.create();
-        String expect = gson.toJson(worker);
+        String expect = gson.toJson(employees);
         assertThat(engine.generate(em -> true), is(expect));
     }
 
@@ -120,10 +124,13 @@ public class ReportEngineTest {
         Report report = new ReportXML(store);
         StringBuilder expect = new StringBuilder()
                 .append("<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n")
+                .append("<employees>\n    ")
                 .append("<employee name=\"").append(worker.getName()).append("\" ")
-                .append("hired=\"").append(cFormatter.format(worker.getHired().getTime())).append("\" ")
+                .append("hired=\"").append(cFormatter.format(worker .getHired().getTime())).append("\" ")
                 .append("fired=\"").append(cFormatter.format(worker.getFired().getTime())).append("\" ")
-                .append("salary=\"").append(worker.getSalary()).append("\"/>\n");
+                .append("salary=\"").append(worker.getSalary()).append("\"/>\n")
+                .append("</employees>\n");
+
         assertThat(report.generate(em -> true), is(expect.toString()));
     }
 }

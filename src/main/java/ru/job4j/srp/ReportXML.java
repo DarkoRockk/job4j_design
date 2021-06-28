@@ -17,17 +17,27 @@ public class ReportXML implements Report, Serializable {
 
     @Override
     public String generate(Predicate<Employee> filter) throws JAXBException, IOException {
-        StringBuilder text = new StringBuilder();
-        for (Employee employee : store.findBy(filter)) {
-            JAXBContext context = JAXBContext.newInstance(Employee.class);
-            Marshaller marshaller = context.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-            try (StringWriter writer = new StringWriter()) {
-
-                marshaller.marshal(employee, writer);
-                text.append(writer.getBuffer().toString());
-            }
+        Employees employees = new Employees(store.findBy(filter));
+        JAXBContext context = JAXBContext.newInstance(Employees.class);
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        String rsl;
+        try (StringWriter writer = new StringWriter()) {
+            marshaller.marshal(employees, writer);
+            rsl = writer.getBuffer().toString();
         }
-        return text.toString();
+        return rsl;
+//        StringBuilder text = new StringBuilder();
+//        for (Employee employee : store.findBy(filter)) {
+//            JAXBContext context = JAXBContext.newInstance(Employee.class);
+//            Marshaller marshaller = context.createMarshaller();
+//            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+//            try (StringWriter writer = new StringWriter()) {
+//
+//                marshaller.marshal(employee, writer);
+//                text.append(writer.getBuffer().toString());
+//            }
+//        }
+//        return text.toString();
     }
 }
