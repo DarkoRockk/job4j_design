@@ -3,9 +3,7 @@ package ru.job4j.product;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Shop implements Storage {
-
-    List<Food> list = new ArrayList<>();
+public class Shop extends Storage {
 
     @Override
     public void printList() {

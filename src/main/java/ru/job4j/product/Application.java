@@ -29,5 +29,11 @@ public class Application {
         for(Storage s : list) {
             s.printList();
         }
+
+        control.resort();
+
+        for(Storage s : list) {
+            s.printList();
+        }
     }
 }
