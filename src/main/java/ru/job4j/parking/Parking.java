@@ -13,23 +13,35 @@ public class Parking {
     }
 
     public boolean park(Car car) {
-        boolean rsl = false;
+        boolean rsl;
         if (car.getSize() == 1) {
-            if (passPlaces < lightCars.length) {
-                lightCars[passPlaces++] = car;
-                rsl = true;
-            }
+            rsl = parkLight(car);
         } else {
-            if (truckPlaces < heavyCars.length) {
-                heavyCars[truckPlaces++] = car;
-                rsl = true;
-            } else {
-                if (lightCars.length - passPlaces >= car.getSize()) {
-                    while (passPlaces <= car.getSize()) {
-                        lightCars[passPlaces++] = car;
-                    }
-                    rsl = true;
+            rsl = parkTruck(car);
+        }
+        return rsl;
+    }
+
+    public boolean parkLight(Car car) {
+        boolean rsl = false;
+        if (passPlaces < lightCars.length) {
+            lightCars[passPlaces++] = car;
+            rsl = true;
+        }
+        return rsl;
+    }
+
+    public boolean parkTruck(Car car) {
+        boolean rsl = false;
+        if (truckPlaces < heavyCars.length) {
+            heavyCars[truckPlaces++] = car;
+            rsl = true;
+        } else {
+            if (lightCars.length - passPlaces >= car.getSize()) {
+                while (passPlaces <= car.getSize()) {
+                    lightCars[passPlaces++] = car;
                 }
+                rsl = true;
             }
         }
         return rsl;
